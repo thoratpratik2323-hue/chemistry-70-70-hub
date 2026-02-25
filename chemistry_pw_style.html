@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry 70/70 - PW Style Poster Mindmaps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --text-light: #f8fafc;
+            --primary: #3b82f6;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, rgba(0, 0, 0, 1) 100%);
+            background-attachment: fixed;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fbbf24, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-family: 'Kalam', cursive;
+            font-size: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .mindmap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* The Poster Board */
+        .poster {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 5rem;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Handwritten Chapter Title */
+        .center-topic {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 10;
+            border: 4px solid #fff;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+            text-align: center;
+        }
+
+        /* Grid for the subtopics */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Connecting lines simulated via borders on desktop mostly, but we'll use a clean box layout */
+        .box {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 5px solid;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box::before {
+            content: '📌';
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .box h3 {
+            font-family: 'Kalam', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .box ul {
+            list-style: none;
+        }
+
+        .box ul li {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .box ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: inherit;
+            font-weight: bold;
+        }
+
+        .formula-text {
+            display: block;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #fca5a5;
+            margin-top: 5px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        /* Color Variations for Boxes */
+        .box-blue {
+            border-color: #3b82f6;
+        }
+
+        .box-blue h3 {
+            color: #60a5fa;
+        }
+
+        .box-green {
+            border-color: #10b981;
+        }
+
+        .box-green h3 {
+            color: #34d399;
+        }
+
+        .box-red {
+            border-color: #f43f5e;
+        }
+
+        .box-red h3 {
+            color: #fb7185;
+        }
+
+        .box-yellow {
+            border-color: #f59e0b;
+        }
+
+        .box-yellow h3 {
+            color: #fbbf24;
+        }
+
+        .box-purple {
+            border-color: #8b5cf6;
+        }
+
+        .box-purple h3 {
+            color: #a78bfa;
+        }
+
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .center-topic {
+                font-size: 1.5rem;
+                padding: 1rem 2rem;
+            }
+        }
+
+        .chapter-badge {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: #fff;
+            color: #000;
+            font-weight: 900;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>⚡ PW Style One-Page Mindmaps</h1>
+        <p>Ek Page, Ek Chapter Khallas! (70/70 Strategy)</p>
+    </header>
+
+    <div class="mindmap-container">
+
+        <!-- CHAPTER 1: SOLUTIONS -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 1</div>
+            <div class="center-topic">💧 SOLUTIONS</div>
+
+            <div class="grid-layout">
+                <div class="box box-blue">
+                    <h3>1. Henry's vs Raoult's</h3>
+                    <ul>
+                        <li><b>Henry's Law:</b> Dissolving Gas in Liquid.
+                            <span class="formula-text">p = KH × χ (Higher KH = Less soluble)</span>
+                        </li>
+                        <li><b>Raoult's Law:</b> Liquid in Liquid. Volatile components.
+                            <span class="formula-text">P(Total) = P°A·χA + P°B·χB</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>2. Ideal & Non-Ideal</h3>
+                    <ul>
+                        <li><b>Ideal:</b> ΔH=0, ΔV=0, follows Raoult's. (Benzene+Toluene)</li>
+                        <li><b>+ve Deviation:</b> Weaker forces, Higher VP. Minimum boiling azeotrope. (Ethanol+Water)
+                        </li>
+                        <li><b>-ve Deviation:</b> Stronger forces, Lower VP. Maximum boiling azeotrope. (HNO3+Water)
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-yellow">
+                    <h3>3. Colligative Properties</h3>
+                    <ul>
+                        <li><b>RLVP:</b> <span class="formula-text">(P° - P)/P° = χ(solute)</span></li>
+                        <li><b>Elevation BP:</b> <span class="formula-text">ΔTb = Kb × m</span></li>
+                        <li><b>Depression FP:</b> <span class="formula-text">ΔTf = Kf × m</span></li>
+                        <li><b>Osmotic Pres.:</b> <span class="formula-text">π = CRT</span></li>
+                    </ul>
+                </div>
+
+                <div class="box box-red">
+                    <h3>4. Van't Hoff Factor (i)</h3>
+                    <ul>
+                        <li>Used when solute Associates (i < 1) or Dissociates (i> 1).</li>
+                        <li><span class="formula-text">i = Normal M.Mass / Abnormal M.Mass</span></li>
+                        <li>Multiply 'i' to all colligative formulas!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 2: ELECTROCHEMISTRY -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 2</div>
+            <div class="center-topic">⚡ ELECTROCHEMISTRY</div>
+
+            <div class="grid-layout">
+                <div class="box box-purple">
+                    <h3>1. Nernst Equation</h3>
+                    <ul>
+                        <li>Calculate EMF at any concentration.</li>
+                        <li><span class="formula-text">Ecell = E°cell - (0.0591/n) log(Q)</span></li>
+                        <li>At Equilibrium: Ecell = 0 <br><span class="formula-text">E°cell = (0.0591/n) log(Kc)</span>
+                        </li>
+                        <li><span class="formula-text">ΔG° = -n F E°cell</span></li>
+                    </ul>
+                </div>
+
+                <div class="box box-blue">
+                    <h3>2. Faraday's Laws</h3>
+                    <ul>
+                        <li><b>First Law:</b> Mass deposited ∝ Q.
+                            <span class="formula-text">W = Z × I × t</span>
+                        </li>
+                        <li><b>Second Law:</b> Same current, different cells.
+                            <span class="formula-text">W1 / E1 = W2 / E2</span> (E=Eq. weight)
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>3. Kohlrausch's Law</h3>
+                    <ul>
+                        <li>Molar conductivity at infinite dilution (Λ°m).</li>
+                        <li>Λ°m (AB) = λ°(A+) + λ°(B-)</li>
+                        <li>Application: Finding Λ°m for Weak Electrolytes (like CH3COOH) using Strong ones.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-yellow">
+                    <h3>4. Batteries</h3>
+                    <ul>
+                        <li><b>Primary:</b> Non-rechargeable (Dry cell).</li>
+                        <li><b>Secondary:</b> Rechargeable. Lead Storage.
+                            <span class="formula-text">Discharge Anode: Pb → PbSO4</span>
+                        </li>
+                        <li><b>Fuel Cell:</b> H2-O2 (Apollo space program). 70% efficient, water is byproduct.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 3: CHEMICAL KINETICS -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 3</div>
+            <div class="center-topic">⏱️ CHEMICAL KINETICS</div>
+
+            <div class="grid-layout">
+                <div class="box box-red">
+                    <h3>1. Rate & Order</h3>
+                    <ul>
+                        <li><b>Rate Law:</b> Rate = k[A]^x[B]^y</li>
+                        <li><b>Order:</b> x+y (Experimental, can be 0 or fraction)</li>
+                        <li><b>Molecularity:</b> Theoretical collisions. (1, 2, 3... never 0)</li>
+                        <li><b>Unit of k:</b> <span class="formula-text">(mol/L)^(1-n) s^-1</span></li>
+                    </ul>
+                </div>
+
+                <div class="box box-blue">
+                    <h3>2. Zero & First Order</h3>
+                    <ul>
+                        <li><b>Zero Order:</b> <span class="formula-text">k = (R0 - R)/t</span><br>Graph of [R] vs t is
+                            straight line decreasing.</li>
+                        <li><b>First Order (VVI):</b> <span class="formula-text">k = (2.303/t) log(R0/R)</span><br>All
+                            radioactive decays follow 1st order.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>3. Half Life (t1/2)</h3>
+                    <ul>
+                        <li><b>Zero Order:</b> <span class="formula-text">t1/2 = R0 / 2k</span> (Depends on Initial
+                            Conc.)</li>
+                        <li><b>First Order:</b> <span class="formula-text">t1/2 = 0.693 / k</span> (Independent of
+                            Initial Conc.)</li>
+                    </ul>
+                </div>
+
+                <div class="box box-purple">
+                    <h3>4. Arrhenius Equation</h3>
+                    <ul>
+                        <li>Effect of Temp on Rate (Rate doubles for 10°C rise).</li>
+                        <li><span class="formula-text">k = A e^(-Ea/RT)</span></li>
+                        <li><span class="formula-text">log(k2/k1) = (Ea / 2.303R) [1/T1 - 1/T2]</span></li>
+                        <li>Catalyst lowers Activation Energy (Ea).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORGANIC - HALOALKANES -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 6</div>
+            <div class="center-topic">🔄 HALOALKANES & ARENES</div>
+
+            <div class="grid-layout">
+                <div class="box box-blue">
+                    <h3>1. SN1 vs SN2 (VVI)</h3>
+                    <ul>
+                        <li><b>SN1 (Carbocation):</b> 2 steps. Reactivity: 3° > 2° > 1°. Weak nucleophile, Polar protic
+                            solvent. Forms Racemic mixture.</li>
+                        <li><b>SN2 (Transition State):</b> 1 step. Reactivity: 1° > 2° > 3° (Steric). Strong
+                            nucleophile. Complete Inversion (Walden).</li>
+                    </ul>
+                </div>
+
+                <div class="box box-red">
+                    <h3>2. Name Reactions (Halogen Exch)</h3>
+                    <ul>
+                        <li><b>Finkelstein:</b> Makes Alkyl Iodides.
+                            <span class="formula-text">R-Cl + NaI (Dry Acetone) → R-I + NaCl(ppt)</span>
+                        </li>
+                        <li><b>Swarts:</b> Makes Alkyl Fluorides.
+                            <span class="formula-text">R-X + AgF → R-F + AgX</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>3. Addition to Alkenes</h3>
+                    <ul>
+                        <li><b>Markovnikov:</b> H goes to carbon with MORE Hydrogens. Negative part goes to LESS H.</li>
+                        <li><b>Peroxide Effect (Anti-Markov):</b> ONLY with HBr + Peroxide. Reverse addition.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-yellow">
+                    <h3>4. Aryl Halides</h3>
+                    <ul>
+                        <li>Less reactive towards Nucleophilic substitution due to partial double bond character
+                            (resonance).</li>
+                        <li><b>Wurtz-Fittig:</b> Ar-X + R-X + Na → Ar-R</li>
+                        <li><b>Fittig:</b> Ar-X + Ar-X + Na → Biphenyl</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALDEHYDES & KETONES -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 8</div>
+            <div class="center-topic">🍋 ALD, KETONES & CARBOXYLIC</div>
+
+            <div class="grid-layout">
+                <div class="box box-purple">
+                    <h3>1. Distinction Tests</h3>
+                    <ul>
+                        <li><b>Tollens' Test:</b> Ag(NH3)2+. Gives Silver Mirror. (+ve for ALL Aldehydes).</li>
+                        <li><b>Fehling's Test:</b> Cu2+. Gives Red ppt. (+ve for Aliphatic Aldehydes ONLY).</li>
+                        <li><b>Iodoform:</b> For CH3-C=O or CH3-CH(OH)-. Yellow ppt (CHI3).</li>
+                    </ul>
+                </div>
+
+                <div class="box box-red">
+                    <h3>2. Alpha-Hydrogen Rxns</h3>
+                    <ul>
+                        <li><b>Aldol:</b> Ald/Ket WITH α-H (Dil. NaOH) → β-hydroxy → Heat → α,β-unsaturated.</li>
+                        <li><b>Cannizzaro:</b> Aldehydes WITHOUT α-H (HCHO). Conc. NaOH → Self oxidation-reduction →
+                            Alcohol + Acid salt.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>3. Reductions</h3>
+                    <ul>
+                        <li><b>Rosenmund:</b> Acid Chloride → Aldehyde (H2/Pd-BaSO4).</li>
+                        <li><b>Clemmensen:</b> C=O → CH2 (Zn-Hg / conc. HCl).</li>
+                        <li><b>Wolff-Kishner:</b> C=O → CH2 (NH2NH2 / KOH, Glycol).</li>
+                    </ul>
+                </div>
+
+                <div class="box box-blue">
+                    <h3>4. Carboxylic Acids</h3>
+                    <ul>
+                        <li>More acidic than Phenols (carboxylate ion has two equivalent resonance structures).</li>
+                        <li><b>HVZ Reaction:</b> Acid with α-H + X2/Red P → α-Haloacid.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- AMINES -->
+        <div class="poster">
+            <div class="chapter-badge">Chapter 9</div>
+            <div class="center-topic">🐟 AMINES</div>
+
+            <div class="grid-layout">
+                <div class="box box-yellow">
+                    <h3>1. Basic Character</h3>
+                    <ul>
+                        <li>Gas Phase: 3° > 2° > 1° > NH3 (+I effect)</li>
+                        <li>Aqueous (Methyl): 2° > 1° > 3° > NH3</li>
+                        <li>Aqueous (Ethyl): 2° > 3° > 1° > NH3</li>
+                        <li>Aniline is weakest base (Lone pair in resonance).</li>
+                    </ul>
+                </div>
+
+                <div class="box box-red">
+                    <h3>2. Preparation</h3>
+                    <ul>
+                        <li><b>Gabriel Phthalimide:</b> ONLY prepares pure 1° Aliphatic Amines.</li>
+                        <li><b>Hoffmann Bromamide (VVI):</b> Amide + Br2 + 4NaOH → 1° Amine (Steps down 1 Carbon).</li>
+                    </ul>
+                </div>
+
+                <div class="box box-purple">
+                    <h3>3. Distinction Tests</h3>
+                    <ul>
+                        <li><b>Carbylamine:</b> ONLY 1° Amines + CHCl3 + KOH → Isocyanide (Foul odor).</li>
+                        <li><b>Hinsberg (Benzene sulphonyl chloride):</b>
+                            1° → Soluble in NaOH. <br>
+                            2° → Insoluble in NaOH. <br>
+                            3° → No reaction.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>4. Diazonium Salts</h3>
+                    <ul>
+                        <li><b>Sandmeyer:</b> CuCl/HCl or CuBr/HBr.</li>
+                        <li><b>Gattermann:</b> Cu powder / HCl.</li>
+                        <li><b>Azo Dye Test:</b> Aniline reacts with Diazonium salt to form Yellow dye.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
