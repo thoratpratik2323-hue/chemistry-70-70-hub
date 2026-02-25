@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry 70/70 - Ultimate Short Notes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+            --border-light: rgba(255, 255, 255, 0.1);
+
+            /* Subject Colors */
+            --physical: #3b82f6;
+            /* Blue */
+            --inorganic: #10b981;
+            /* Green */
+            --organic: #f43f5e;
+            /* Rose */
+
+            --glow-spread: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(244, 63, 94, 0.1), transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Accordion Structure */
+        .chapter-container {
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--glow-spread);
+            transition: transform 0.3s;
+        }
+
+        .chapter-container:hover {
+            transform: scale(1.01);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chapter-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.03);
+            user-select: none;
+        }
+
+        .chapter-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chap-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        /* Color Codes */
+        .physical .chap-number {
+            background: var(--physical);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .inorganic .chap-number {
+            background: var(--inorganic);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .organic .chap-number {
+            background: var(--organic);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .chapter-container.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .chapter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chapter-container.active .chapter-content {
+            max-height: 2000px;
+            transition: max-height 1s ease-in-out;
+        }
+
+        .notes-grid {
+            padding: 2rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .note-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--text-muted);
+            padding: 1rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .physical .note-card {
+            border-left-color: var(--physical);
+        }
+
+        .inorganic .note-card {
+            border-left-color: var(--inorganic);
+        }
+
+        .organic .note-card {
+            border-left-color: var(--organic);
+        }
+
+        .note-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .note-card p,
+        .note-card ul {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .note-card ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .note-card li {
+            margin-bottom: 0.3rem;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .formula {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #a78bfa;
+            margin-top: 1rem;
+            display: block;
+            letter-spacing: 1px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .chapter-header {
+                font-size: 1.1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Topper's Short Notes 📝</h1>
+            <p class="subtitle">Complete 10 Chapters | CBSE Class 12 Chemistry | Target 70/70</p>
+        </header>
+
+        <!-- PHYSICAL CHEMISTRY -->
+        <h2 style="color: var(--physical); margin: 2rem 0 1rem; font-family: 'Poppins', sans-serif;">📊 Physical
+            Chemistry</h2>
+
+        <!-- CH 1 -->
+        <div class="chapter-container physical" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">1</span> Solutions</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Henry's Law & Raoult's Law</h3>
+                        <ul>
+                            <li><span class="highlight">Henry's Law:</span> Solubility of gas in liquid ∝ partial
+                                pressure of gas. <i>p = K<sub>H</sub> * x</i>. (Lower K<sub>H</sub> = Higher
+                                solubility).</li>
+                            <li><span class="highlight">Raoult's Law:</span> Partial vapour pressure of volatile
+                                component p<sub>1</sub> = p<sub>1</sub>° * x<sub>1</sub>.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Ideal vs Non-Ideal Solutions</h3>
+                        <ul>
+                            <li><span class="highlight">Ideal:</span> Obeys Raoult's Law. ΔH<sub>mix</sub> = 0,
+                                ΔV<sub>mix</sub> = 0. (e.g., Benzene + Toluene).</li>
+                            <li><span class="highlight">+ve Deviation:</span> Weaker A-B interactions. V.P. increases.
+                                Minimum boiling azeotrope (Ethanol + Water).</li>
+                            <li><span class="highlight">-ve Deviation:</span> Stronger A-B interactions. V.P. decreases.
+                                Maximum boiling azeotrope (HNO3 + Water).</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Colligative Properties & Van't Hoff Factor (i)</h3>
+                        <p>Properties depending only on <i>number</i> of solute particles. To correct for
+                            association/dissociation, multiply by factor <i>i</i>.</p>
+                        <span class="formula">
+                            1. RLVP: (P° - P)/P° = i * X<sub>solute</sub> <br>
+                            2. Elevation in BP: ΔT<sub>b</sub> = i * K<sub>b</sub> * m <br>
+                            3. Depression in FP: ΔT<sub>f</sub> = i * K<sub>f</sub> * m <br>
+                            4. Osmotic Pressure: π = i * C * R * T
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 2 -->
+        <div class="chapter-container physical" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">2</span> Electrochemistry</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Nernst Equation & Gibbs Free Energy</h3>
+                        <p>Used to calculate EMF of cell at non-standard conditions.</p>
+                        <span class="formula">
+                            E<sub>cell</sub> = E°<sub>cell</sub> - (0.0591 / n) * log₁₀[Product]/[Reactant] <br>
+                            ΔG° = -n F E°<sub>cell</sub> <br>
+                            ΔG° = -2.303 R T log(K<sub>c</sub>)
+                        </span>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Kohlrausch's Law</h3>
+                        <p>Limiting molar conductivity (Λ°<sub>m</sub>) of an electrolyte is the sum of individual
+                            contributions of its cations and anions. Crucial for calculating Λ°<sub>m</sub> of weak
+                            electrolytes (like CH3COOH).</p>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Faraday's Laws of Electrolysis</h3>
+                        <ul>
+                            <li><span class="highlight">First Law:</span> Mass deposited w = Z * I * t.</li>
+                            <li><span class="highlight">Second Law:</span> When same current passed through different
+                                electrolytes, w ∝ Equivalent weight.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>4. Batteries & Fuel Cells</h3>
+                        <ul>
+                            <li><span class="highlight">Lead Storage Battery:</span> Discharging: Pb(s) + PbO2(s) +
+                                2H2SO4(aq) → 2PbSO4(s) + 2H2O(l). Recharging inverses this.</li>
+                            <li><span class="highlight">H2-O2 Fuel Cell:</span> Highly efficient, pollution-free. Water
+                                is the only byproduct.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 3 -->
+        <div class="chapter-container physical" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">3</span> Chemical Kinetics</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Order vs Molecularity</h3>
+                        <ul>
+                            <li><span class="highlight">Order:</span> Sum of powers of conc. terms in rate law. Exp.
+                                determined. Can be 0 or fractional.</li>
+                            <li><span class="highlight">Molecularity:</span> Number of colliding species in an
+                                elementary step. Theoretical. Never 0.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Rate Constant (k) & Integrated Rate Laws</h3>
+                        <span class="formula">
+                            Zero Order: k = [R]₀ - [R] / t &nbsp;| &nbsp;t<sub>1/2</sub> = [R]₀ / 2k <br>
+                            First Order: k = (2.303/t) * log([R]₀/[R]) &nbsp;| &nbsp;t<sub>1/2</sub> = 0.693 / k
+                        </span>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Arrhenius Equation (Temperature Dependence)</h3>
+                        <p>Rate constant doubles for every 10°C rise. Catalyst lowers activation energy (Ea) providing
+                            alternate path.</p>
+                        <span class="formula">
+                            k = A * e<sup>-Ea/RT</sup> <br>
+                            log(k₂/k₁) = (Ea / 2.303R) * [ (T₂ - T₁) / (T₁T₂) ]
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INORGANIC CHEMISTRY -->
+        <h2 style="color: var(--inorganic); margin: 3rem 0 1rem; font-family: 'Poppins', sans-serif;">⚛️ Inorganic
+            Chemistry</h2>
+
+        <!-- CH 4 -->
+        <div class="chapter-container inorganic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">4</span> d and f Block Elements</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. General Properties of d-block (Transition Metals)</h3>
+                        <ul>
+                            <li><span class="highlight">Variable Oxidation States:</span> Due to involvement of both ns
+                                and (n-1)d electrons.</li>
+                            <li><span class="highlight">Colored Ions & Magnetism:</span> Due to presence of unpaired
+                                d-electrons (d-d transition). <br> Magnetic moment μ = √(n(n+2)) BM.</li>
+                            <li><span class="highlight">Catalytic Properties:</span> Ability to adopt multiple oxidation
+                                states and provide surface area.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Lanthanoid Contraction</h3>
+                        <p>Steady decrease in atomic/ionic radii of lanthanoids due to poor shielding of 4f electrons.
+                            <b>Consequence:</b> Radii of 4d & 5d series (e.g., Zr and Hf) become almost identical.</p>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. KMnO4 and K2Cr2O7</h3>
+                        <p>Strong oxidizing agents. <b>Learn Ionic Equations:</b></p>
+                        <ul>
+                            <li><span class="highlight">Acidic KMnO4:</span> MnO4⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H2O (Colorless)
+                            </li>
+                            <li><span class="highlight">Acidic K2Cr2O7:</span> Cr2O7²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H2O
+                                (Green)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 5 -->
+        <div class="chapter-container inorganic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">5</span> Coordination Compounds</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Valence Bond Theory (VBT)</h3>
+                        <ul>
+                            <li><span class="highlight">Strong Field Ligands (CO, CN-, NH3):</span> Pair up electrons.
+                                Usually form Inner orbital complexes (d²sp³) - Diamagnetic.</li>
+                            <li><span class="highlight">Weak Field Ligands (Halogens, H2O):</span> Do not pair. Form
+                                Outer orbital complexes (sp³d²) - Paramagnetic.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Crystal Field Theory (CFT)</h3>
+                        <p>Ligands split the degenerate d-orbitals into t2g (lower) and eg (higher) sets in octahedral
+                            field.<br>
+                            If Δo > P (Strong ligand): 4th electron goes to t2g (low spin, pairing occurs).<br>
+                            If Δo < P (Weak ligand): 4th electron goes to eg (high spin).</p>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Isomerism</h3>
+                        <ul>
+                            <li><span class="highlight">Linkage:</span> Ambidentate ligands (NO2 vs ONO).</li>
+                            <li><span class="highlight">Optical:</span> Non-superimposable mirror images. Common in
+                                [M(en)3]³⁺ types.</li>
+                            <li><span class="highlight">Geometrical:</span> Cis (adjacent) vs Trans (opposite). Forms in
+                                square planar [Ma2b2] or octahedral [Ma4b2].</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORGANIC CHEMISTRY -->
+        <h2 style="color: var(--organic); margin: 3rem 0 1rem; font-family: 'Poppins', sans-serif;">🧪 Organic Chemistry
+        </h2>
+
+        <!-- CH 6 -->
+        <div class="chapter-container organic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">6</span> Haloalkanes and Haloarenes</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. SN1 vs SN2 Mechanisms</h3>
+                        <ul>
+                            <li><span class="highlight">SN1:</span> Two steps. Carbocation intermediate. Reactivity
+                                order: 3° > 2° > 1°. Stereochem: Racemization. Favored by polar protic solvents.</li>
+                            <li><span class="highlight">SN2:</span> Single step. Transition state. Reactivity order: 1°
+                                > 2° > 3° (Steric hindrance). Stereochem: Inversion of configuration (Walden Inversion).
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Key Name Reactions</h3>
+                        <ul>
+                            <li><span class="highlight">Sandmeyer:</span> Benzenediazonium chloride + CuCl/HCl →
+                                Chlorobenzene.</li>
+                            <li><span class="highlight">Finkelstein:</span> R-X + NaI (Dry Acetone) → R-I + NaX (Halogen
+                                exchange to form Iodides).</li>
+                            <li><span class="highlight">Swarts:</span> R-X + AgF → R-F (Formation of Fluorides).</li>
+                            <li><span class="highlight">Wurtz-Fittig & Fittig:</span> Ar-X + R-X + 2Na (Ether) → Ar-R
+                                (Alkyl arene) / Ar-X + Ar-X → Ar-Ar (Biphenyl).</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Addition to Alkenes</h3>
+                        <p><span class="highlight">Markovnikov's rule:</span> Neg part of reagent (like X⁻ from HX)
+                            attaches to C with less Hydrogen.<br>
+                            <span class="highlight">Anti-Markovnikov (Peroxide effect / Kharasch):</span> Only with HBr
+                            + Peroxide. Br attaches to C with more Hydrogen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 7 -->
+        <div class="chapter-container organic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">7</span> Alcohols, Phenols, and Ethers</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Acidic Character (Phenol vs Alcohol)</h3>
+                        <p>Phenol is more acidic than alcohols due to resonance stabilization of phenoxide ion.<br>
+                            - EWG (like -NO2) <i>increases</i> acidity (e.g., Picric acid).<br>
+                            - ERG (like -CH3) <i>decreases</i> acidity.</p>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Preparation of Alcohols</h3>
+                        <ul>
+                            <li><span class="highlight">Acid Catalyzed Hydration:</span> Markovnikov addition of H2O.
+                                Rearrangement possible.</li>
+                            <li><span class="highlight">Hydroboration-Oxidation (HBO):</span> Anti-Markovnikov addition
+                                of H2O. No rearrangement. Uses B2H6, then H2O2/OH⁻.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Mighty Name Reactions & Tests</h3>
+                        <ul>
+                            <li><span class="highlight">Reimer-Tiemann:</span> Phenol + CHCl3 + aq.NaOH →
+                                Salicylaldehyde.</li>
+                            <li><span class="highlight">Kolbe's Rxn:</span> Phenol + CO2 + NaOH → Salicylic acid.</li>
+                            <li><span class="highlight">Williamson Synthesis:</span> RONa + R'X → R-O-R'. R'X must be
+                                PRIMARY (1°) to avoid elimination (alkene).</li>
+                            <li><span class="highlight">Lucas Test (ZnCl2/HCl):</span> Distinguishes 1°, 2°, 3°
+                                alcohols. 3° gives immediate turbidity.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 8 -->
+        <div class="chapter-container organic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">8</span> Aldehydes, Ketones, Carboxylic Acids</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Test for Aldehydes vs Ketones</h3>
+                        <ul>
+                            <li><span class="highlight">Tollens' Test (Silver Mirror):</span> Aldehydes (both aliphatic
+                                & aromatic) give +ve test. Ketones do not.</li>
+                            <li><span class="highlight">Fehling's Test:</span> Red ppt. Aliphatic aldehydes give +ve.
+                                (Aromatic aldehydes and Ketones do not).</li>
+                            <li><span class="highlight">Iodoform Test (NaOI):</span> For compounds containing CH3-C=O or
+                                CH3-CH(OH)- group. Forms yellow ppt of CHI3.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Alpha-Hydrogen Reactions (VVI)</h3>
+                        <ul>
+                            <li><span class="highlight">Aldol Condensation:</span> Ald/Ket WITH alpha-H (e.g.,
+                                Acetaldehyde). Dilute NaOH. Forms β-hydroxy aldehyde → heated to α,β-unsaturated
+                                carbonyl.</li>
+                            <li><span class="highlight">Cannizzaro Reaction:</span> Aldehydes WITHOUT alpha-H (e.g.,
+                                HCHO, Benzaldehyde). Conc. NaOH. Self oxidation-reduction (disproportionation) into
+                                alcohol and acid salt.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Name Reactions for Synthesis & Reduction</h3>
+                        <ul>
+                            <li><span class="highlight">Rosenmund:</span> Acid chloride + H2/Pd-BaSO4 → Aldehyde.</li>
+                            <li><span class="highlight">Clemmensen:</span> C=O + Zn-Hg/HCl → CH2 (Alkanes).</li>
+                            <li><span class="highlight">Wolff-Kishner:</span> C=O + NH2NH2 / KOH, Glycol → CH2.</li>
+                            <li><span class="highlight">HVZ Reaction:</span> Carboxylic acid (with alpha-H) + X2/Red P →
+                                Alpha-halo carboxylic acid.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 9 -->
+        <div class="chapter-container organic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">9</span> Amines</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Basic Character of Amines</h3>
+                        <ul>
+                            <li><span class="highlight">Gas phase:</span> 3° > 2° > 1° > NH3 (Due to +I effect of alkyl
+                                groups).</li>
+                            <li><span class="highlight">Aqueous phase (Methyl -CH3):</span> 2° > 1° > 3° > NH3.</li>
+                            <li><span class="highlight">Aqueous phase (Ethyl -C2H5):</span> 2° > 3° > 1° > NH3
+                                (Calculated based on +I, solvation, and steric hindrance).</li>
+                            <li>Aniline is WEAKER base than NH3 due to resonance of lone pair with benzene ring.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Essential Name Rxns & Tests</h3>
+                        <ul>
+                            <li><span class="highlight">Hoffmann Bromamide Degradation:</span> Amide + Br2 + 4NaOH → 1°
+                                Amine (with ONE carbon less). Step-down rxn.</li>
+                            <li><span class="highlight">Gabriel Phthalimide:</span> For pure 1° aliphatic amines ONLY.
+                                Cannot prepare aniline (Ar-X doesn't do SN2).</li>
+                            <li><span class="highlight">Carbylamine Test (Isocyanide test):</span> ONLY 1° amines
+                                (aliphatic/aromatic) + CHCl3 + KOH → Foul-smelling Isocyanide.</li>
+                            <li><span class="highlight">Hinsberg Test:</span> Uses Benzene sulphonyl chloride. 1° amine
+                                product is soluble in alkali, 2° is insoluble, 3° doesn't react.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CH 10 -->
+        <div class="chapter-container organic" onclick="toggleChapter(this)">
+            <div class="chapter-header">
+                <div class="chapter-title"><span class="chap-number">10</span> Biomolecules</div>
+                <div class="toggle-icon">▼</div>
+            </div>
+            <div class="chapter-content">
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <h3>1. Carbohydrates</h3>
+                        <ul>
+                            <li><span class="highlight">Reducing Sugars:</span> Contain free aldehyde/ketonic group
+                                (reduce Tollens/Fehling). e.g., Glucose, Fructose, Maltose, Lactose. (Sucrose is
+                                NON-reducing).</li>
+                            <li><span class="highlight">Glucose Structure:</span> Known to have straight 6-C chain
+                                (HI/red P), carbonyl is aldehyde (Br2 water oxidation).</li>
+                            <li><span class="highlight">Anomers & Mutarotation:</span> Alpha and Beta D-glucose are
+                                anomers (differ at C1). Slow change of optical rotation towards equilibrium is
+                                mutarotation.</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>2. Proteins</h3>
+                        <ul>
+                            <li><span class="highlight">Unit:</span> Alpha-amino acids joined by Peptide linkage
+                                (-CO-NH-).</li>
+                            <li><span class="highlight">Structure:</span> 1° (Sequence of amino acids), 2° (Alpha-helix,
+                                beta-pleated sheet via H-bonds), 3° (3D folding), 4° (Subunit assembly).</li>
+                            <li><span class="highlight">Denaturation:</span> Loss of biological activity due to heat/pH
+                                change. 2° & 3° structures destroyed, 1° remains intact. (e.g., Boiling egg, curdling
+                                milk).</li>
+                        </ul>
+                    </div>
+                    <div class="note-card">
+                        <h3>3. Nucleic Acids & Vitamins</h3>
+                        <ul>
+                            <li><span class="highlight">DNA vs RNA:</span> DNA has Deoxyribose, Thymine. RNA has Ribose,
+                                Uracil (U instead of T). Double helix vs single strand.</li>
+                            <li><span class="highlight">Fat Soluble Vitamins:</span> A, D, E, K. Subcutaneous fat
+                                storage.</li>
+                            <li><span class="highlight">Water Soluble:</span> B, C. Excreted in urine (must be supplied
+                                in diet daily, exception B12).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Perfect Notes for 70/70.</strong> Read them, revise them, own them! 🎯🌟</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleChapter(element) {
+            // Remove active class from other chapters if you want accordion effect (optional)
+            /*
+            document.querySelectorAll('.chapter-container').forEach(el => {
+                if (el !== element) el.classList.remove('active');
+            });
+            */
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
