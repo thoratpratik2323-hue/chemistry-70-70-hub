@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 70/70 - CBSE Class 12 Chemistry Rapid Revision</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.5);
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Ambient animated background molecules */
+        .molecule {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: float 20s infinite linear;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #f472b6, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 20px rgba(167, 139, 250, 0);
+            }
+
+            100% {
+                text-shadow: 0 0 30px rgba(167, 139, 250, 0.3);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .heart {
+            color: var(--secondary);
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .tab-btn.active::before {
+            opacity: 1;
+        }
+
+        .content-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s forwards;
+        }
+
+        .content-section.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            bottom: -50%;
+            left: -50%;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(30deg) translate(-20%, -20%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .color-1 {
+            color: #60a5fa;
+            border-color: rgba(96, 165, 250, 0.3) !important;
+        }
+
+        .color-2 {
+            color: #f472b6;
+            border-color: rgba(244, 114, 182, 0.3) !important;
+        }
+
+        .color-3 {
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3) !important;
+        }
+
+        .list-group {
+            list-style: none;
+        }
+
+        .list-group li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .list-group li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 1.2rem;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            color: #a78bfa;
+            border-left: 4px solid var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .btn-action {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .btn-action:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .content-section.active {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- generate floating molecules -->
+    <script>
+        for (let i = 0; i < 15; i++) {
+            let div = document.createElement('div');
+            div.className = 'molecule';
+            let size = Math.random() * 20 + 5;
+            div.style.width = size + 'px';
+            div.style.height = size + 'px';
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            div.style.animationDelay = (Math.random() * -20) + 's';
+            document.body.appendChild(div);
+        }
+    </script>
+
+    <header>
+        <h1>Mission 70/70 <span class="heart">❤️</span></h1>
+        <p class="subtitle">Ultimate Rapid Revision for Class 12 Boards</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('physical')">📊 Physical Chemistry (23 Marks)</button>
+            <button class="tab-btn" onclick="openTab('inorganic')">🧪 Inorganic Chemistry (14 Marks)</button>
+            <button class="tab-btn" onclick="openTab('organic')">🧬 Organic Chemistry (33 Marks)</button>
+        </div>
+
+        <!-- PHYSICAL CHEMISTRY -->
+        <div id="physical" class="content-section active">
+            <div class="card color-1">
+                <h2 class="color-1">💧 Solutions</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Raoult's Law:</span> Ideal vs Non-Ideal solutions (+ve and -ve
+                        deviations)</li>
+                    <li><span class="highlight">Colligative Properties:</span> RLVP, Elevation of B.P., Depression of
+                        F.P., Osmotic Pressure.</li>
+                    <li><span class="highlight">Van't Hoff Factor (i):</span> Abnormal molar mass. Remember: i =
+                        Obs/Calc</li>
+                </ul>
+                <div class="formula-box">
+                    ΔTb = i * Kb * m<br>
+                    π = i * C * R * T
+                </div>
+            </div>
+
+            <div class="card color-1">
+                <h2 class="color-1">⚡ Electrochemistry</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Nernst Equation:</span> Calculate EMF exactly. Direct 3 mark numerical!
+                    </li>
+                    <li><span class="highlight">Kohlrausch Law:</span> Molar conductivity at infinite dilution.</li>
+                    <li><span class="highlight">Faraday's Laws:</span> Mass deposited = Z*I*t</li>
+                    <li><span class="highlight">Batteries:</span> Lead storage battery recharge reactions.</li>
+                </ul>
+                <div class="formula-box">
+                    E_cell = E°_cell - (0.0591/n) * log(Q)<br>
+                    ΔG° = -nFE°_cell
+                </div>
+            </div>
+
+            <div class="card color-1">
+                <h2 class="color-1">⏱️ Chemical Kinetics</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Order & Molecularity:</span> Differences and units of rate constant (k).
+                    </li>
+                    <li><span class="highlight">Zero & First Order:</span> Integrated rate equations and Half-life
+                        (t1/2).</li>
+                    <li><span class="highlight">Arrhenius Equation:</span> Effect of temp and catalyst on reaction rate.
+                    </li>
+                </ul>
+                <div class="formula-box">
+                    First Order k = (2.303/t) * log[R0/R]<br>
+                    t1/2 = 0.693 / k
+                </div>
+            </div>
+        </div>
+
+        <!-- INORGANIC CHEMISTRY -->
+        <div id="inorganic" class="content-section">
+            <div class="card color-2">
+                <h2 class="color-2">🏔️ d and f Block Elements</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Transition Metals:</span> Variable oxidation states, Formation of
+                        colored ions, complex compounds, catalytic properties.</li>
+                    <li><span class="highlight">Lanthanoid Contraction:</span> Causes and consequences (Zr/Hf size
+                        similarity).</li>
+                    <li><span class="highlight">KMnO4 & K2Cr2O7:</span> Preparation and oxidizing properties (Learn
+                        balanced ionic equations!)</li>
+                </ul>
+            </div>
+
+            <div class="card color-2">
+                <h2 class="color-2">🔗 Coordination Compounds</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">IUPAC Nomenclature:</span> Guaranteed 1-2 marks.</li>
+                    <li><span class="highlight">VBT:</span> Hybridization (sp³d² vs d²sp³), magnetic properties
+                        (paramagnetic vs diamagnetic).</li>
+                    <li><span class="highlight">CFT (Crystal Field Theory):</span> Splitting of d-orbitals in
+                        octahedral/tetrahedral fields. Spectrochemical series.</li>
+                    <li><span class="highlight">Isomerism:</span> Linkage, coordination, ionization, solvate, and
+                        stereoisomerism.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ORGANIC CHEMISTRY -->
+        <div id="organic" class="content-section">
+            <div class="card color-3">
+                <h2 class="color-3">🔄 Sn1 vs Sn2 & Haloalkanes</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Sn1:</span> 3° > 2° > 1° (Carbocation). Racemization occurs.</li>
+                    <li><span class="highlight">Sn2:</span> 1° > 2° > 3° (Steric hindrance). Inversion of configuration.
+                    </li>
+                    <li><span class="highlight">Name Reactions:</span> Sandmeyer, Finkelstein, Swarts, Wurtz-Fittig.
+                    </li>
+                    <li><span class="highlight">Markovnikov's Rule</span> vs Peroxide Effect (Anti-Markovnikov).</li>
+                </ul>
+            </div>
+
+            <div class="card color-3">
+                <h2 class="color-3">🍷 Alcohols, Phenols, Ethers</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Acidity:</span> Phenol > Water > Alcohol. Effect of EWG (-NO2) and ERG
+                        (-CH3) on phenol acidity.</li>
+                    <li><span class="highlight">Name Reactions:</span> Kolbe's reaction, Reimer-Tiemann, Williamson
+                        ether synthesis.</li>
+                    <li><span class="highlight">Distinction Tests:</span> Lucas test (1°, 2°, 3° alcohols).</li>
+                </ul>
+            </div>
+
+            <div class="card color-3">
+                <h2 class="color-3">🍋 Aldehydes, Ketones, Carboxylic</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Tollens' & Fehling's Test:</span> Guaranteed question. Aldehydes give
+                        positive, ketones negative.</li>
+                    <li><span class="highlight">Aldol Condensation:</span> Alpha-H required.</li>
+                    <li><span class="highlight">Cannizzaro Reaction:</span> No alpha-H required (HCHO, PhCHO).</li>
+                    <li><span class="highlight">Clemmensen & Wolff-Kishner</span> reduction for C=O to CH2.</li>
+                    <li><span class="highlight">HVZ Reaction:</span> Halogenation of carboxylic acids.</li>
+                </ul>
+            </div>
+
+            <div class="card color-3">
+                <h2 class="color-3">🐟 Amines</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Basic Character:</span> Order in aq vs gas phase. Gabriel phthalimide
+                        synthesis.</li>
+                    <li><span class="highlight">Tests:</span> Carbylamine Test & Hinsberg Test.</li>
+                    <li><span class="highlight">Reactions:</span> Hoffmann bromamide, Diazonium salts.</li>
+                </ul>
+            </div>
+
+            <div class="card color-3">
+                <h2 class="color-3">🧬 Biomolecules</h2>
+                <ul class="list-group">
+                    <li><span class="highlight">Carbohydrates:</span> Glucose structures, Anomers, Mutarotation.</li>
+                    <li><span class="highlight">Proteins:</span> Denaturation, Peptide bonds, 1°/2° structures.</li>
+                    <li><span class="highlight">Nucleic Acids:</span> DNA vs RNA, Vitamins (fat/water soluble).</li>
+                </ul>
+            </div>
+
+            <div class="card color-3"
+                style="grid-column: 1 / -1; display:flex; justify-content:center; align-items:center; flex-direction:column; background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(30,41,59,0.9));">
+                <h2 class="color-3" style="border:none;">Master All "Name Reactions" & "Distinction Tests" for 100%
+                    success!</h2>
+                <p style="font-size: 1.2rem;">Organic Chemistry makes up almost half the paper (33/70 marks).</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Aap phod doge exam mein! All the best! ❤️</p>
+        <p style="font-size:0.9rem; margin-top:10px; color:#64748b;">Built with love for 70/70</p>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Unstyle all tabs
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            // Highlight clicked tab
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
